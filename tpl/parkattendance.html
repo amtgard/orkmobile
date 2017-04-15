@@ -1,0 +1,90 @@
+<parkattendance data-page="true">
+
+	<header class="header-bar">
+		<button class="btn icon icon-arrow-back pull-left" data-navigation="$previous-page"></button>
+		<div class="center"><h1 class="title">Park Attendance</h1></div>
+		<a class="btn pull-right material-icons padded-right logout">exit_to_app</a>
+		<a class="btn pull-right icon icon-settings settings"></a>
+	</header>
+
+	<div class="content padded-full">
+		<input type="date" id="date" name="date" placeholder="Date">
+		<button class="btn fit-parent primary padded-top" name="players-park">From</button>
+		<button class="btn fit-parent primary padded-top" name="player">Player</button>
+		<button class="btn fit-parent primary padded-top" data-panel-id="class-selector" name="player-class">Class</button>
+		<button class="btn fit-parent negative padded-top" name="enter-attendance">Enter Attendance</button>
+		
+		<ul id="current-attendance" class="list">
+		</ul>
+	</div>
+	
+	<div id="class-selector" class="panel-full">
+		<header class="header-bar">
+			<a class="btn icon icon-close pull-right" href="#" data-panel-close="true"></a>
+			<div class="center"><h1 class="title">Choose Class</h1></div>
+		</header>
+
+		<div class="content">
+			<button class="btn fit-parent primary negative padded-top" data-navigation="$previous-page">Cancel</button>
+			<ul class='list' id='classes'>
+				<li class='padded-list' class_id='1'>Anti-Paladin</li>
+				<li class='padded-list' class_id='2'>Archer</li>
+				<li class='padded-list' class_id='3'>Assassin</li>
+				<li class='padded-list' class_id='4'>Barbarian</li>
+				<li class='padded-list' class_id='5'>Bard</li>
+				<li class='padded-list' class_id='6'>Color</li>
+				<li class='padded-list' class_id='7'>Druid</li>
+				<li class='padded-list' class_id='8'>Healer</li>
+				<li class='padded-list' class_id='9'>Monk</li>
+				<li class='padded-list' class_id='10'>Monster</li>
+				<li class='padded-list' class_id='11'>Paladin</li>
+				<li class='padded-list' class_id='12'>Peasant</li>
+				<li class='padded-list' class_id='14'>Reeve</li>
+				<li class='padded-list' class_id='15'>Scout</li>
+				<li class='padded-list' class_id='16'>Warrior</li>
+				<li class='padded-list' class_id='17'>Wizard</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div id="player-selector" class="panel-full">
+		<header class="header-bar">
+			<div class="center"><h1 class="title">Choose Player</h1></div>
+		</header>
+
+		<div class="content padded-full">
+			<button class="btn fit-parent primary negative padded-top" data-navigation="$previous-page">Cancel</button>
+			<div class="input-wrapper">
+				<input class="with-label" type="search" id="search-players" name="search-players">
+				<label class="floating-label" for="search-players">Search Playerz</label>
+			</div>
+			<ul class='list' id='players'>
+			</ul>
+		</div>
+	</div>
+	
+	<div id="kingdom-selector" class="panel-full">
+		<header class="header-bar">
+			<div class="center"><h1 class="title">Choose Kingdom</h1></div>
+		</header>
+
+		<div class="content">
+			<button class="btn fit-parent primary negative padded-top" data-navigation="$previous-page">Cancel</button>
+			<ul class='list' id='kingdoms'>
+			</ul>
+		</div>
+	</div>
+	
+	<div id="park-selector" class="panel-full">
+		<header class="header-bar">
+			<div class="center"><h1 class="title">Choose Park</h1></div>
+		</header>
+
+		<div class="content">
+			<button class="btn fit-parent primary negative padded-top" data-navigation="$previous-page">Cancel</button>
+			<ul class='list' id='parks'>
+			</ul>
+		</div>
+	</div>
+	
+</parkattendance>

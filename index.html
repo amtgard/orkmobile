@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.	See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.	The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.	You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.	See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+
+		<link rel="stylesheet" href="phonon/css/phonon.css" />
+		<link rel="stylesheet" href="css/orkmobile.css" />
+		<title>ORK Mobile</title>
+		
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.js"></script>	
+	</head>
+	<body>
+
+		<!-- Panel tags go here -->
+
+		<!-- Side Panel tags go here -->
+
+		<!-- Notification tags go here -->
+
+		<!-- Dialog tags go here -->
+
+
+		<!-- the home page is the default one. This page does not require to call its content because we define on its tag.-->
+		<home data-page="true"></home>
+
+ 		<!-- Login.-->
+		<login data-page="true"></login>
+
+ 		<!-- Kingdom Chooser.-->
+		<choosekingdom data-page="true"></choosekingdom>
+
+ 		<!-- Park Chooser.-->
+		<choosepark data-page="true"></choosepark>
+    
+ 		<!-- Park Attendance.-->
+		<parkattendance data-page="true"></parkattendance>
+    
+ 		<!-- Settings.-->
+		<settings data-page="true"></settings>
+
+		<!-- scripts -->
+		<script src="phonon/js/phonon.js"></script>
+		<script type="text/javascript" src="js/jquery.debounce-1.0.5.js"></script>	
+		<script type="text/javascript" src="js/orkmobile.js"></script>
+		<script type="text/javascript" src="js/ork.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				app.initialize();
+			});
+		</script>
+		<script type="text/javascript" src="js/cordova.js"></script>
+	</body>
+</html>
