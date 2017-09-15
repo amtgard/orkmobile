@@ -149,14 +149,14 @@ window.Ork = new function(){
 		}
 	},
 	
-	this.storeMundanes = function(kingdom_id, park_id, mundane_id, persona, class_id) {
+	this.storeMundanes = function(kingdom_id, park_id, mundane_id, persona, class_id, class_name) {
 		store = JSON.parse(localStorage.getItem('orkmobile'));
 		if (store.cache.mundanes[kingdom_id] === undefined)
 			store.cache.mundanes[kingdom_id] = {};
 		if (store.cache.mundanes[kingdom_id][park_id] === undefined)
 			store.cache.mundanes[kingdom_id][park_id] = {};
 		if (typeof persona != 'undefined')
-			store.cache.mundanes[kingdom_id][park_id][mundane_id] = { persona: persona, class_id: class_id };
+			store.cache.mundanes[kingdom_id][park_id][mundane_id] = { persona: persona, class_id: class_id, class_name: class_name, mundane_id: mundane_id, kingdom_id: kingdom_id, park_id: park_id };
 		localStorage.setItem('orkmobile', JSON.stringify(store));
 		return Ork.makeArray(store.cache.mundanes[kingdom_id][park_id]);
 	},
@@ -201,7 +201,7 @@ window.Ork = new function(){
 		Ork.lastEntryDate = date;
 	},
 
-	this.pushAttendance = function(q_id, type, mundane_id, persona, class_id, date, credits, flavor, park_id, calendar_event_id, success, failure) {
+	this.pushAttendance = function(q_id, type, mundane_id, persona, class_id, class_name, date, credits, flavor, park_id, calendar_event_id, success, failure) {
 		$.getJSON( Ork.ork, 
 			{
 				call: "Attendance/AddAttendance",
@@ -222,7 +222,7 @@ window.Ork = new function(){
 				if (data.Status == 5) {
 					failure(q_id);
 				} else {
-					Ork.storeMundanes(Ork.currentTarget.kingdom_id, park_id, mundane_id, persona, class_id);
+					Ork.storeMundanes(Ork.currentTarget.kingdom_id, park_id, mundane_id, persona, class_id, class_name);
 					success(q_id);
 				}
 			});

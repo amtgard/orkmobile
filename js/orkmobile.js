@@ -69,8 +69,8 @@ orkmobile.on({page: 'choosepark', preventClose: false, content: 'choosepark.html
 			var kingdom_id = $(this).attr('kingdom-id');
 			var park_id = $(this).attr('park-id');
 			var park_n = $(this).text();
-			Ork.currentTarget = { kingdom_id: kingdom_id.kingdom_id, park_id: park_id, kingdom: Ork.lastKingdom, park: park_n };
-			Ork.playerSearchTerms = { kingdom_id: kingdom_id.kingdom_id, park_id: park_id, kingdom: Ork.lastKingdom, park: park_n };
+			Ork.currentTarget = { kingdom_id: kingdom_id, park_id: park_id, kingdom: Ork.lastKingdom, park: park_n };
+			Ork.playerSearchTerms = { kingdom_id: kingdom_id, park_id: park_id, kingdom: Ork.lastKingdom, park: park_n };
 			phonon.navigator().changePage('parkattendance');
 		});	
 	});
@@ -96,6 +96,7 @@ orkmobile.on({page: 'parkattendance', preventClose: false, content: 'parkattenda
 	activity.onCreate(function() {		
 		$('parkattendance #class-selector').on('click', '[class_id]', function() {
 			Ork.currentTarget.class_id = $(this).attr('class_id');
+			Ork.currentTarget.class_name = $(this).text();
 			$('[name=player-class]').text($(this).text());
 			phonon.panel('#class-selector').close();
 		});
@@ -136,14 +137,21 @@ orkmobile.on({page: 'parkattendance', preventClose: false, content: 'parkattenda
 		********************************/
 		$('parkattendance').on('click', '[name=player]', function() {
 			$('parkattendance #players').empty();
-			var mundanes_players = Ork.getMundanes(Ork.playerSearchTerms.kingdom_id, Ork.playerSearchTerms.park_id);
-			var mundanes = Ork.getMundanes(Ork.currentTarget.kingdom_id, Ork.currentTarget.park_id);
+			var search_results = [];
+			var cached_results = [];
+			if (typeof Ork.playerSearchTerms.kingdom_id !== 'undefined' && typeof Ork.playerSearchTerms.park_id !== 'undefined')
+				search_results = Ork.getMundanes(Ork.playerSearchTerms.kingdom_id, Ork.playerSearchTerms.park_id);
+			if (typeof Ork.currentTarget.kingdom_id !== 'undefined' && typeof Ork.currentTarget.park_id !== 'undefined')
+				cached_results = Ork.getMundanes(Ork.currentTarget.kingdom_id, Ork.currentTarget.park_id);
 			
-			for (var mundane_id in mundanes_players)
-				mundanes[mundane_id] = mundanes_players[mundane_id];
+			var mundanes = []
+			for (var ids in search_results)
+				mundanes[search_results[ids].mundane_id] = search_results[ids];
+			for (var idc in cached_results)
+				mundanes[cached_results[idc].mundane_id] = cached_results[idc];
 			for (var mundane_id in mundanes) {
 				if (typeof mundanes[mundane_id].class_id != 'undefined' && mundane_id > 0)
-					$('parkattendance #players').append('<li class="app-button player" mundane_id="' + mundane_id + '" default_class_id="' + mundanes[mundane_id].class_id + '">' + mundanes[mundane_id].persona + '</li>');
+					$('parkattendance #players').append('<li class="app-button player" mundane-id="' + mundane_id + '" class-id="' + mundanes[mundane_id].class_id + '" class-name="' + mundanes[mundane_id].class_name + ' ">' + mundanes[mundane_id].persona + '</li>');
 			}
 			phonon.panel('#player-selector').open();
 		});
@@ -162,7 +170,10 @@ orkmobile.on({page: 'parkattendance', preventClose: false, content: 'parkattenda
 		$('parkattendance #players').on('click', '[mundane-id]', function() {
 			Ork.currentTarget.mundane_id = $(this).attr('mundane-id');
 			Ork.currentTarget.persona = $(this).text();
+			Ork.currentTarget.class_name = $(this).attr('class-name');
+			Ork.currentTarget.class_id = $(this).attr('class-id');
 			$('parkattendance [name=player]').text($(this).text());
+			$('parkattendance [name=player-class]').text($(this).attr('class-name'));
 			phonon.panel('#player-selector').close();
 		});
 		
@@ -183,12 +194,13 @@ orkmobile.on({page: 'parkattendance', preventClose: false, content: 'parkattenda
 			var flavor = "";
 			var park_id = Ork.currentTarget.park_id;
 			var calendar_event_id = 0;
-			Ork.pushAttendance(-202, "Park", mundane_id, persona, class_id, date, credits, flavor, park_id, calendar_event_id, function(q_id) {
+			Ork.pushAttendance(-202, "Park", mundane_id, persona, class_id, Ork.currentTarget.class_name, date, credits, flavor, park_id, calendar_event_id, function(q_id) {
 				Ork.lastEntryDate = date;
 				Ork.lastEntryCredits = credits;
 				Ork.currentTarget.mundane_id = 0;
 				$('parkattendance [name=player]').text("Player");
 				Ork.currentTarget.class_id = 0;
+				Ork.currentTarget.class_name = "";
 				$('parkattendance [name=player-class]').text("Class");
 				phonon.navigator().changePage('parkattendance');
 				loadParkAttendance()
@@ -300,6 +312,7 @@ function logout(remembrance) {
 function loadParkAttendance() {
 	$('#current-attendance').empty();
 	Ork.fetchCurrentAttendance(Ork.lastEntryDate, Ork.currentTarget.kingdom_id, Ork.currentTarget.park_id, function(attendance) {
+		$('#current-attendance').html("");
 		for (var a in attendance)
 			$('#current-attendance').append(
 				'<li class="item-expanded">' +
