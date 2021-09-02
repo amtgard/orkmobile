@@ -1,5 +1,5 @@
 window.Ork = new function(){
-	this.ork = "https://amtgard.com/ork/orkservice/Json/index.php";
+	this.ork = "https://ork.amtgard.com/orkservice/Json/index.php";
 
 	/***********
 	
